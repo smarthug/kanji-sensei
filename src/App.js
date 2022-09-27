@@ -6,7 +6,11 @@ export default function App() {
   useEffect(() => {
     // console.log("life goes on");
     // navigator.clipboard.readText().then((clipText) => setClipboard(clipText));
-    handleClick()
+    // 로컬스토러지에서 get 하는 코드 넣어야겠다 ...
+    if(localStorage.hasPermission==="true"){
+
+      handleClick()
+    }
   }, []);
 
   function handleClick() {
@@ -24,7 +28,7 @@ export default function App() {
         // navigator.clipboard
         //   .readText()
         //   .then((clipText) => setClipboard(clipText));
-
+        localStorage.setItem("hasPermission","true")
 
         //https://ja.dict.naver.com/#/search?query=${clipText}&range=all
 
