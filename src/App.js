@@ -1,25 +1,52 @@
-import logo from './logo.svg';
-import './App.css';
+import { useEffect, useState } from "react";
+// import "./styles.css";
 
-function App() {
+export default function App() {
+  const [clipboard, setClipboard] = useState("");
+  useEffect(() => {
+    // console.log("life goes on");
+    // navigator.clipboard.readText().then((clipText) => setClipboard(clipText));
+    handleClick()
+  }, []);
+
+  function handleClick() {
+    navigator.permissions.query({ name: "clipboard-read" }).then((result) => {
+      console.log(result);
+      if (result.state === "granted" || result.state === "prompt") {
+        /* write to the clipboard now */
+        // setTimeout(() => {
+        //   navigator.clipboard
+        //     .readText()
+        //     .then((clipText) => setClipboard(clipText));
+        // }, 2000);
+
+
+        // navigator.clipboard
+        //   .readText()
+        //   .then((clipText) => setClipboard(clipText));
+
+
+        //https://ja.dict.naver.com/#/search?query=${clipText}&range=all
+
+
+        navigator.clipboard
+          .readText()
+          .then((clipText) => {
+
+
+            setClipboard(clipText)
+            window.open(`https://ja.dict.naver.com/#/search?query=${clipText}&range=all`, "_blank");
+          });
+      }
+    });
+  }
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>클립보드에 복사된 한자 : {clipboard}</h1>
+      <button onClick={handleClick}>복사한 한자 사전 찾기</button>
+      {/* <h2>{clipboard}</h2> */}
+      {/* <div>내가 마지막으로 복사한 텍스트를 가지고 네이버사전으로 이동하기</div> */}
+      {/* <div>버츄얼라이즈 넣을까??</div> */}
     </div>
   );
 }
-
-export default App;
